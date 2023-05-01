@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('patient_id')->constrained(); // change to payee_id?
+            $table->foreignId('payment_type_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

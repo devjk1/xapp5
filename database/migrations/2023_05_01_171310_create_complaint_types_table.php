@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('complaint_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('appointment_id')->constrained();
+            $table->foreignId('complaint_type_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

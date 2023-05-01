@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->morphs('contactable');
             $table->timestamps();
             $table->softDeletes();
         });
