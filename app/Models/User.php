@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(Incident::class);
     }
 
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function contacts(): MorphMany
     {
         return $this->morphMany(Contact::class, 'contactable');

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('incident_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

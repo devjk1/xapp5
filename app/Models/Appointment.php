@@ -15,6 +15,11 @@ class Appointment extends Model
 
     protected $fillable = [];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function incident(): BelongsTo
     {
         return $this->belongsTo(Incident::class);

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_item_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

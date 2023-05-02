@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('invoice_id')->constrained();
+            $table->morphs('iitemable');
             $table->timestamps();
             $table->softDeletes();
         });
