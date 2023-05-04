@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('incident_id')->constrained();
+            $table->foreignId('location_id')->constrained();
             $table->foreignId('appointment_type_id')->constrained();
             $table->timestamps();
             $table->softDeletes();

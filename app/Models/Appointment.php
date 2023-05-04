@@ -39,4 +39,9 @@ class Appointment extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

@@ -8,23 +8,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Inventory extends Model
+class Location extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    public function orderItem(): BelongsTo
+    public function organization(): BelongsTo
     {
-        return $this->belongsTo(OrderItem::class);
+        return $this->belongsTo(Organization::class);
     }
 
-    public function inventoryTransactions(): HasMany
+    public function appointments(): HasMany
     {
-        return $this->hasMany(InventoryTransaction::class);
+        return $this->hasMany(Appointment::class);
     }
 
-    public function location(): BelongsTo
+    public function inventories(): HasMany
     {
-        return $this->belongsTo(Location::class);
+        return $this->hasMany(Inventory::class);
     }
 }
