@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
             $table->foreignId('patient_id')->constrained();
+            $table->foreign('user_id', 'overseen_by')->references('id')->on('users');
+            $table->foreign('user_id', 'created_by')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

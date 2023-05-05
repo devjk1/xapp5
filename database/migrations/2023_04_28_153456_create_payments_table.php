@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreign('user_id', 'created_by')->references('id')->on('users');
             $table->foreignId('patient_id')->constrained(); // change to payee_id?
             $table->foreignId('payment_type_id')->constrained();
             $table->timestamps();

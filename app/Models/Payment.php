@@ -18,6 +18,11 @@ class Payment extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'created_by');
+    }
+
     public function paymentType(): BelongsTo
     {
         return $this->belongsTo(PaymentType::class);

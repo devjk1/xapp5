@@ -69,16 +69,36 @@ class User extends Authenticatable
 
     public function incidents(): HasMany
     {
-        return $this->hasMany(Incident::class);
+        return $this->hasMany(Incident::class, 'overseen_by');
+    }
+
+    public function createdIncidents(): HasMany
+    {
+        return $this->hasMany(Incident::class, 'created_by');
     }
 
     public function appointments(): HasMany
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'scheduled_for');
+    }
+
+    public function createdAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'created_by');
     }
 
     public function contacts(): MorphMany
     {
         return $this->morphMany(Contact::class, 'contactable');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'created_by');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'created_by');
     }
 }

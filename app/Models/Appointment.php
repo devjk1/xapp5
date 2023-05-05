@@ -17,7 +17,12 @@ class Appointment extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'scheduled_for');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'created_by');
     }
 
     public function incident(): BelongsTo

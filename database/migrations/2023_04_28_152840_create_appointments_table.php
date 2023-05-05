@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreign('user_id', 'scheduled_for')->references('id')->on('users');
+            $table->foreign('user_id', 'created_by')->references('id')->on('users');
             $table->foreignId('incident_id')->constrained();
             $table->foreignId('location_id')->constrained();
             $table->foreignId('appointment_type_id')->constrained();
