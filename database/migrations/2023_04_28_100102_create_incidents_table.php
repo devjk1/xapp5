@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('incidents', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id', 'created_by')->references('id')->on('users');
-            $table->foreignId('patient_id')->constrained(); // change to payee_id?
-            $table->foreignId('payment_type_id')->constrained();
+            $table->foreignId('patient_id')->constrained();
+            $table->foreignId('overseen_by')->constrained('users');
+            $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('incidents');
     }
 };

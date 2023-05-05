@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id', 'created_by')->references('id')->on('users');
+            $table->foreignId('scheduled_for')->constrained('users');
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('incident_id')->constrained();
+            $table->foreignId('location_id')->constrained();
+            $table->foreignId('appointment_type_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('appointments');
     }
 };
