@@ -19,8 +19,7 @@ class ComplaintFactory extends Factory
     public function definition(): array
     {
         return [
-            'appointment_id' => Appointment::factory(),
-            'complaint_type_id' => ComplaintType::factory(),
+            'name' => fake()->word(),
         ];
     }
 }
