@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class IncidentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'patient_id' => Patient::factory(),
+            'overseen_by' => User::factory(),
+            'created_by' => User::factory(),
+            'name' => fake()->word(),
         ];
     }
 }

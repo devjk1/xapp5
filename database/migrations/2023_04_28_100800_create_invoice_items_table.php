@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained();
             $table->morphs('iitemable');
+            $table->unsignedSmallInteger('quantity');
+            $table->unsignedInteger('price');
             $table->timestamps();
             $table->softDeletes();
         });

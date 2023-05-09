@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Incident;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class NoteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'incident_id' => Incident::factory(),
+            'desc' => fake()->sentence(),
         ];
     }
 }

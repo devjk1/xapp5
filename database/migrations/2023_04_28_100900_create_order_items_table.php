@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->morphs('oitemable');
+            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('price');
             $table->timestamps();
             $table->softDeletes();
         });

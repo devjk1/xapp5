@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Inventory;
+use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class InventoryTransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'inventory_id' => Inventory::factory(),
+            'invoice_item_id' => InvoiceItem::factory(),
+            'quantity' => fake()->numberBetween(1, 100),
         ];
     }
 }

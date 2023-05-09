@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('inventory_id')->constrained();
             $table->foreignId('invoice_item_id')->constrained();
+            $table->unsignedSmallInteger('quantity');
             $table->timestamps();
             $table->softDeletes();
         });

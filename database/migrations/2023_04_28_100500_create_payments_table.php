@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('patient_id')->constrained(); // change to payee_id?
             $table->foreignId('payment_type_id')->constrained();
+            $table->unsignedInteger('total');
             $table->timestamps();
             $table->softDeletes();
         });

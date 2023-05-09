@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Appointment;
+use App\Models\ComplaintType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class ComplaintFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'appointment_id' => Appointment::factory(),
+            'complaint_type_id' => ComplaintType::factory(),
         ];
     }
 }

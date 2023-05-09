@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'appointment_id' => Appointment::factory(),
         ];
     }
 }

@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('organization_id')->constrained();
+            $table->string('name');
+            $table->string('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('zip');
             $table->timestamps();
             $table->softDeletes();
         });

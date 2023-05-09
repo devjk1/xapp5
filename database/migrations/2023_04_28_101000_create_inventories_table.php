@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_item_id')->constrained();
             $table->foreignId('location_id')->constrained();
+            $table->unsignedSmallInteger('quantity');
             $table->timestamps();
             $table->softDeletes();
         });

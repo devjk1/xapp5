@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('payment_id')->constrained();
             $table->foreignId('invoice_id')->constrained();
+            $table->unsignedInteger('total');
             $table->timestamps();
             $table->softDeletes();
         });

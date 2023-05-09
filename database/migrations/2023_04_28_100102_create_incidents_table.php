@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained();
             $table->foreignId('overseen_by')->constrained('users');
             $table->foreignId('created_by')->constrained('users');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });

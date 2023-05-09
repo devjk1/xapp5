@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Location;
+use App\Models\OrderItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class InventoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'order_item_id' => OrderItem::factory(),
+            'location_id' => Location::factory(),
+            'quantity' => fake()->numberBetween(1000, 10000),
         ];
     }
 }
