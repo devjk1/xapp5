@@ -32,4 +32,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::prefix('patients')
+        ->controller(\App\Http\Controllers\PatientController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('patients.index');
+        });
 });
