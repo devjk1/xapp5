@@ -21,15 +21,15 @@ const props = defineProps({
                         <thead>
                         <tr>
                             <th class="px-2 py-1">ID</th>
-                            <th class="px-2 py-1">First Name</th>
                             <th class="px-2 py-1">Last Name</th>
+                            <th class="px-2 py-1">First Name</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="(patient, index) in patients.data" :key="patient.id">
                             <td class="px-2 py-1">{{ patient.id }}</td>
-                            <td class="px-2 py-1">{{ patient.first_name }}</td>
                             <td class="px-2 py-1">{{ patient.last_name }}</td>
+                            <td class="px-2 py-1">{{ patient.first_name }}</td>
                         </tr>
                         </tbody>
                     </table>
