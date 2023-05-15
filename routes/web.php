@@ -37,6 +37,7 @@ Route::middleware([
         ->controller(\App\Http\Controllers\PatientController::class)
         ->group(function () {
             Route::get('/', 'index')->name('patients.index');
+            Route::get('/create', 'create')->name('patients.create');
             Route::get('/{patient}', 'show')->name('patients.show');
             Route::get('/{patient}/edit', 'index')->name('patients.edit');
             Route::delete('/{patient}', 'destroy')->name('patients.destroy');

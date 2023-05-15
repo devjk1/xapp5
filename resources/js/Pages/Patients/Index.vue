@@ -43,9 +43,17 @@ const deletePatient = () => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-4 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <h1>Patients Index</h1>
+                    <div class="flex justify-between">
+                        <h1 class="text-xl font-medium">Patients Index</h1>
+                        <Link
+                            :href="route('patients.create')"
+                            class="px-3 py-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500"
+                        >
+                            Create Patient
+                        </Link>
+                    </div>
 
-                    <table class="table-auto mt-2 w-full">
+                    <table class="table-auto mt-4 w-full">
                         <thead>
                         <tr>
                             <th class="text-left">ID</th>
@@ -61,12 +69,12 @@ const deletePatient = () => {
                             <td class="">{{ patient.first_name }}</td>
                             <td class="">
                                 <div class="flex justify-center space-x-4">
-                                    <Link :href="route('patients.show', { patient: patient })">
+                                    <Link :href="route('patients.show', { patient: patient.id })">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </Link>
-                                    <Link :href="route('patients.edit', { patient: patient })">
+                                    <Link :href="route('patients.edit', { patient: patient.id })">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                         </svg>
@@ -109,7 +117,7 @@ const deletePatient = () => {
                         </tbody>
                     </table>
 
-                    <div class="flex justify-center items-baseline">
+                    <div class="mt-4 flex justify-center items-baseline">
                         <template v-for="link in patients.links">
                             <Link :href="link.url"
                                   v-html="link.label"
