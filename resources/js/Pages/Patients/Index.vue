@@ -25,17 +25,15 @@ const showModalDeletePatient = (patient) => {
 };
 
 const closeModalDeletePatient = () => {
-    form.reset();
     showingModalDeletePatient.value = false;
+    form.reset();
 };
 
 const deletePatient = () => {
     form.delete(route('patients.destroy', form.patient.id), {
         preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            showingModalDeletePatient.value = false;
-        },
+        onSuccess: () => closeModalDeletePatient(),
+        onFinish: () => form.reset(),
     });
 };
 </script>
@@ -94,6 +92,7 @@ const deletePatient = () => {
                                                 @click="deletePatient()"
                                                 :disabled="form.processing"
                                                 class="ml-4"
+                                                :class="[ form.processing ? 'opacity-25' : '' ]"
                                             >
                                                 Delete
                                             </DangerButton>
