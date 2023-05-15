@@ -38,6 +38,7 @@ Route::middleware([
         ->group(function () {
             Route::get('/', 'index')->name('patients.index');
             Route::get('/create', 'create')->name('patients.create');
+            Route::post('/', 'store')->name('patients.store');
             Route::get('/{patient}', 'show')->name('patients.show');
             Route::get('/{patient}/edit', 'index')->name('patients.edit');
             Route::delete('/{patient}', 'destroy')->name('patients.destroy');

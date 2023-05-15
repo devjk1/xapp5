@@ -13,6 +13,11 @@ class Patient extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'first_name',
+        'last_name',
+    ];
+
     public function incidents(): HasMany
     {
         return $this->hasMany(Incident::class);

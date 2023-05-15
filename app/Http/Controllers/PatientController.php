@@ -34,7 +34,14 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        //
+        $validated = $request->safe()->only([
+            'first_name',
+            'last_name',
+        ]);
+
+        Patient::create($validated);
+
+        return to_route('patients.index');
     }
 
     /**
