@@ -44,7 +44,9 @@ const deletePatient = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="p-4 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="flex justify-between">
-                        <h1 class="text-xl font-medium">Patients Index</h1>
+                        <h1 class="text-xl font-medium">
+                            Patients Index
+                        </h1>
                         <Link
                             :href="route('patients.create')"
                             class="px-3 py-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500"
