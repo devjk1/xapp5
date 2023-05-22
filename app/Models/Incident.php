@@ -13,11 +13,18 @@ class Incident extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+    ];
 
-    public function user(): BelongsTo
+    public function overseenBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'overseen_by');
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function patient(): BelongsTo

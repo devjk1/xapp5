@@ -67,7 +67,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function incidents(): HasMany
+    public function overseenIncidents(): HasMany
     {
         return $this->hasMany(Incident::class, 'overseen_by');
     }
@@ -77,7 +77,7 @@ class User extends Authenticatable
         return $this->hasMany(Incident::class, 'created_by');
     }
 
-    public function appointments(): HasMany
+    public function scheduledAppointments(): HasMany
     {
         return $this->hasMany(Appointment::class, 'scheduled_for');
     }
