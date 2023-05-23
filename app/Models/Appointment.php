@@ -16,11 +16,6 @@ class Appointment extends Model
 
     protected $fillable = [];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id', 'scheduled_for');
-    }
-
     public function scheduledFor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'scheduled_for');

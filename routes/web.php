@@ -43,4 +43,13 @@ Route::middleware([
             Route::get('/{patient}/edit', 'index')->name('patients.edit');
             Route::delete('/{patient}', 'destroy')->name('patients.destroy');
         });
+
+    Route::prefix('appointments')
+        ->controller(\App\Http\Controllers\AppointmentController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('appointments.index');
+        });
+
+    // Single Action Controllers
+    Route::put('select/patient', \App\Http\Controllers\SelectPatientController::class)->name('select.patient');
 });
