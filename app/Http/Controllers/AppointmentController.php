@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
+use App\Models\Patient;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AppointmentController extends Controller
@@ -12,8 +14,20 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $selectedPatient = $request->session()->get('selectedPatient');
+        if (isset($selectedPatient)) {
+            $patient = Patient::findOrFail($selectedPatient['id']);
+            $appointments = $patient->through('incidents')->has('appointments')
+                ->with(['scheduledFor', 'incident.patient'])
+                ->orderBy('start', 'desc')
+                ->get();
+
+            return Inertia::render('Appointments/Index', [
+                'appointments' => $appointments,
+            ]);
+        }
         // return different views if user appointments , patient appointments (query string?)
         $appointments = Appointment::with(['scheduledFor', 'incident.patient'])
             ->orderBy('start', 'desc')
@@ -45,7 +59,9 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        return Inertia::render('Appointments/Show', [
+            'appointment' => $appointment,
+        ]);
     }
 
     /**
