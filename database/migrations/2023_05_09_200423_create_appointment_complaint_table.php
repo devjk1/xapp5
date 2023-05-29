@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('appointment_id')->constrained();
             $table->foreignId('complaint_id')->constrained();
+            $table->unsignedTinyInteger('level');
             $table->timestamps();
             $table->softDeletes();
         });

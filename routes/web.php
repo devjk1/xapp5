@@ -53,4 +53,5 @@ Route::middleware([
 
     // Single Action Controllers
     Route::put('select/patient', \App\Http\Controllers\SelectPatientController::class)->name('select.patient');
+    Route::post('store/appointment/complaints', \App\Http\Controllers\StoreAppointmentComplaintController::class)->name('store.appointment.complaints');
 });

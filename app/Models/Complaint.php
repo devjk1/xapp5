@@ -14,6 +14,8 @@ class Complaint extends Model
 
     public function appointments(): BelongsToMany
     {
-        return $this->belongsToMany(Appointment::class)->withTimestamps();
+        return $this->belongsToMany(Appointment::class)
+            ->withPivot('level')
+            ->withTimestamps();
     }
 }

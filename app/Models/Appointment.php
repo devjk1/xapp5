@@ -38,7 +38,9 @@ class Appointment extends Model
 
     public function complaints(): BelongsToMany
     {
-        return $this->belongsToMany(Complaint::class)->withTimestamps();
+        return $this->belongsToMany(Complaint::class)
+            ->withPivot('level')
+            ->withTimestamps();
     }
 
     public function invoices(): HasMany
