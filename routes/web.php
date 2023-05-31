@@ -51,7 +51,12 @@ Route::middleware([
             Route::get('/{appointment}', 'show')->name('appointments.show');
         });
 
+    Route::prefix('appointments')
+        ->controller(\App\Http\Controllers\AppointmentComplaintController::class)
+        ->group(function () {
+            Route::post('/{appointment}/complaints', 'store')->name('appointment.complaints.store');
+        });
+
     // Single Action Controllers
     Route::put('select/patient', \App\Http\Controllers\SelectPatientController::class)->name('select.patient');
-    Route::post('store/appointment/complaints', \App\Http\Controllers\StoreAppointmentComplaintController::class)->name('store.appointment.complaints');
 });

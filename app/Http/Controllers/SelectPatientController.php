@@ -21,6 +21,6 @@ class SelectPatientController extends Controller
             'last_name' => $patient->last_name,
         ]);
 
-        return to_route('patients.index');
+        return to_route('appointments.index');
     }
 }

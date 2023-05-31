@@ -23,11 +23,10 @@ props.complaints.forEach(complaint => {
 
 const form = useForm({
     ...baseForm,
-    appointment: props.appointment.id,
 });
 
 const submit = () => {
-    form.post(route('store.appointment.complaints'), {
+    form.post(route('appointment.complaints.store', { appointment: props.appointment.id }), {
         preserveScroll: true,
         onFinish: () => form.reset(),
     });
