@@ -59,4 +59,11 @@ Route::middleware([
 
     // Single Action Controllers
     Route::put('select/patient', \App\Http\Controllers\SelectPatientController::class)->name('select.patient');
+
+    // Search
+    Route::prefix('search')
+        ->controller(\App\Http\Controllers\SearchController::class)
+        ->group(function () {
+            Route::post('/patients', 'patients')->name('search.patients');
+        });
 });

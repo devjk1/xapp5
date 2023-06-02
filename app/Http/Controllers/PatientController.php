@@ -13,9 +13,17 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::orderBy('last_name')->paginate(15);
+        $patients = Patient::query()
+            ->when($request->query('search_last_name'), function ($query, $last_name) {
+                $query->searchLastName($last_name);
+            })
+            ->when($request->query('search_first_name'), function ($query, $first_name) {
+                $query->searchFirstName($first_name);
+            })
+            ->orderBy('last_name')
+            ->paginate(15);
 
         return Inertia::render('Patients/Index', [
             'patients' => $patients,

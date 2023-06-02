@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import {Link, router, useForm} from "@inertiajs/vue3";
+import {ref, watch} from "vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "../../Components/SecondaryButton.vue";
 import DangerButton from "../../Components/DangerButton.vue";
@@ -15,6 +15,19 @@ const props = defineProps({
 
 const form = useForm({
     patient: null,
+});
+
+const search = ref({
+    last_name: "",
+    first_name: "",
+});
+watch(search.value, (value) => {
+    router.reload({
+        data: {
+            search_last_name: value.last_name,
+            search_first_name: value.first_name,
+        }
+    })
 });
 
 const showingModalDeletePatient = ref(false);
@@ -53,6 +66,17 @@ const deletePatient = () => {
                         >
                             Create Patient
                         </Link>
+                    </div>
+
+                    <div class="mt-4 flex space-x-4">
+                        <input
+                            v-model="search.last_name"
+                            class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        >
+                        <input
+                            v-model="search.first_name"
+                            class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        >
                     </div>
 
                     <table class="table-fixed mt-4 w-full">
