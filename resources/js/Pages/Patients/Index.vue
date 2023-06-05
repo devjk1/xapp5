@@ -21,13 +21,20 @@ const search = ref({
     last_name: "",
     first_name: "",
 });
-watch(search.value, (value) => {
-    router.reload({
+
+const searchPatients = async (searchValue) => {
+    const { last_name, first_name } = searchValue;
+    await router.reload({
         data: {
-            search_last_name: value.last_name,
-            search_first_name: value.first_name,
-        }
-    })
+            search_last_name: last_name,
+            search_first_name: first_name,
+        },
+    });
+};
+
+watch(search.value, (value) => {
+    console.log(value);
+    searchPatients(value);
 });
 
 const showingModalDeletePatient = ref(false);
