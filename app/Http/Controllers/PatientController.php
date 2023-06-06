@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\PatientData;
+use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -41,9 +42,14 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientData $data)
+    public function store(StorePatientRequest $request)
     {
-        Patient::create($data->all());
+        $validated = $request->safe()->only([
+            'first_name',
+            'last_name',
+        ]);
+
+        Patient::create($validated);
 
         return to_route('patients.index');
     }
