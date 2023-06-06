@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\PatientData;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use App\Http\Resources\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,7 +27,7 @@ class PatientController extends Controller
             ->paginate(15);
 
         return Inertia::render('Patients/Index', [
-            'patients' => $patients,
+            'patients' => PatientResource::collection($patients),
         ]);
     }
 

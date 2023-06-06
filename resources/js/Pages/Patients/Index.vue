@@ -158,7 +158,7 @@ const deletePatient = () => {
                     </table>
 
                     <div class="mt-4 flex justify-center items-baseline">
-                        <template v-for="link in patients.links">
+                        <template v-for="link in patients.meta.links">
                             <Link :href="link.url"
                                   v-html="link.label"
                                   class="px-2"
