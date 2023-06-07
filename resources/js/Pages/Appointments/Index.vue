@@ -20,6 +20,7 @@ const props = defineProps({
                             Appointments Index
                         </h1>
                         <Link
+                            :href="route('appointments.create')"
                             class="px-3 py-1 bg-gray-600 text-white rounded-lg hover:bg-gray-500"
                         >
                             Create Appointment

@@ -48,6 +48,7 @@ Route::middleware([
         ->controller(\App\Http\Controllers\AppointmentController::class)
         ->group(function () {
             Route::get('/', 'index')->name('appointments.index');
+            Route::get('/create', 'create')->name('appointments.create');
             Route::get('/{appointment}', 'show')->name('appointments.show');
         });
 

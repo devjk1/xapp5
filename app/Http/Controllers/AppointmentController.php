@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Complaint;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AppointmentController extends Controller
@@ -44,7 +45,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Appointments/Create');
     }
 
     /**
