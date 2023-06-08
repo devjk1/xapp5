@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PatientResource extends JsonResource
+class InvoiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +17,9 @@ class PatientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'incidents' => IncidentResource::collection($this->whenLoaded('incidents')),
-            'contacts' => ContactResource::collection($this->whenLoaded('contacts')),
+            'appointment' => AppointmentResource::make($this->whenLoaded('appointment')),
             'payments' => PaymentResource::collection($this->whenLoaded('payments')),
+            'invoiceItems' => InvoiceItemResource::collection($this->whenLoaded('invoiceItems')),
         ];
     }
 }

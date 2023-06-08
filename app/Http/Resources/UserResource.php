@@ -22,6 +22,13 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'is_active' => $this->is_active,
             'profile_photo_url' => $this->profile_photo_url,
+            'overseenIncidents' => IncidentResource::collection($this->whenLoaded('overseenIncidents')),
+            'createdIncidents' => IncidentResource::collection($this->whenLoaded('createdIncidents')),
+            'scheduledAppointments' => AppointmentResource::collection($this->whenLoaded('scheduledAppointments')),
+            'createdAppointments' => AppointmentResource::collection($this->whenLoaded('createdAppointments')),
+            'contacts' => ContactResource::collection($this->whenLoaded('contacts')),
+            'payments' => PaymentResource::collection($this->whenLoaded('payments')),
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
         ];
     }
 }

@@ -18,9 +18,9 @@ class Payment extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function user(): BelongsTo
+    public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function paymentType(): BelongsTo
