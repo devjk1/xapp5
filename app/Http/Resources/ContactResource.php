@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContactResource extends JsonResource
 {
+    use ResourceTrait;
     /**
      * Transform the resource into an array.
      *
@@ -22,7 +23,7 @@ class ContactResource extends JsonResource
             'city' => $this->city,
             'state' => $this->state,
             'zip' => $this->zip,
-//            'contactable'
+            'contactable' => $this->morphedRelationResource('contactable'),
         ];
     }
 }

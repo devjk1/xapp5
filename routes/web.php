@@ -58,6 +58,12 @@ Route::middleware([
             Route::post('/{appointment}/complaints', 'store')->name('appointment.complaints.store');
         });
 
+    Route::prefix('contacts')
+        ->controller(\App\Http\Controllers\ContactController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('contacts.index');
+        });
+
     // Single Action Controllers
     Route::put('select/patient', \App\Http\Controllers\SelectPatientController::class)->name('select.patient');
 });

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use App\Http\Resources\ContactResource;
 use App\Models\Contact;
+use Inertia\Inertia;
 
 class ContactController extends Controller
 {
@@ -13,7 +15,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::with('contactable')->get();
+
+        return Inertia::render('Contacts/Index', [
+            'contacts' => ContactResource::collection($contacts),
+        ]);
     }
 
     /**
