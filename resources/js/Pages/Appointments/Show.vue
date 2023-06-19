@@ -17,16 +17,15 @@ const props = defineProps({
 const baseForm = {
     complaints: [],
 };
-props.complaints.forEach(complaint => {
+props.complaints.data.forEach(complaint => {
     baseForm["complaints"][complaint.id] = "0";
 })
-
 const form = useForm({
     ...baseForm,
 });
 
 const submit = () => {
-    form.post(route('appointment.complaints.store', { appointment: props.appointment.id }), {
+    form.post(route('appointment.complaints.store', { appointment: props.appointment.data.id }), {
         preserveScroll: true,
         onFinish: () => form.reset(),
     });
@@ -48,7 +47,7 @@ const submit = () => {
                             </thead>
 
                             <tbody>
-                            <tr v-for="(complaint, index) in complaints" :key="complaint.id">
+                            <tr v-for="(complaint, index) in complaints.data" :key="complaint.id">
                                 <td class="">{{ complaint.name }}</td>
                                 <td class="">
                                     <input type="range"

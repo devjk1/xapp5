@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use App\Http\Resources\AppointmentResource;
+use App\Http\Resources\ComplaintResource;
 use App\Models\Appointment;
 use App\Models\Complaint;
 use App\Models\Patient;
@@ -64,8 +66,8 @@ class AppointmentController extends Controller
         $complaints = Complaint::orderBy('id', 'asc')->get();
 
         return Inertia::render('Appointments/Show', [
-            'appointment' => $appointment,
-            'complaints' => $complaints,
+            'appointment' => AppointmentResource::make($appointment),
+            'complaints' => ComplaintResource::collection($complaints),
         ]);
     }
 
