@@ -32,13 +32,11 @@ class AppointmentComplaintController extends Controller
 
         foreach ($complaints as $complaint_id => $complaint_level) {
             if (!is_null($complaint_level) && $complaint_level !== "0") {
-                $appointment->complaints()->syncWithoutDetaching([
+                $appointment->complaints()->sync([
                     $complaint_id => ['level' => $complaint_level]
                 ]);
             }
         }
-
-//        return to_route('patients.index');
     }
 
     /**
