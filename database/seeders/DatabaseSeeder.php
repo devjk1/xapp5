@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
         $appointments = \App\Models\Appointment::factory(30)->create();
 
         $complaints = [
@@ -58,5 +59,9 @@ class DatabaseSeeder extends Seeder
                 'name' => $complaint,
             ]);
         }
+
+        $this->call([
+            MedicationSeeder::class,
+        ]);
     }
 }
