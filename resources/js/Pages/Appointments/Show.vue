@@ -1,8 +1,8 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import {useForm} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
-import {ref} from "vue";
+import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
 
 const props = defineProps({
     appointment: {
@@ -13,17 +13,59 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    medications: {
+        type: Object,
+        required: true,
+    }
 });
 const page = ref(1);
-const baseForm = {
+const form = useForm({
     complaints: [],
-};
-props.complaints.data.forEach(complaint => {
-    baseForm["complaints"][complaint.id] = "0";
-})
-const form = useForm("Appointments/Show", {
-    ...baseForm,
+    medications: [],
 });
+props.complaints.data.forEach(complaint => {
+    form["complaints"][complaint.id] = "0";
+});
+const medicationsList = ref([]);
+const setMedicationsList = (medications) => {
+    medicationsList.value = [];
+    medications.forEach(medication => {
+        medicationsList.value.push({
+            id: medication.id,
+            name: medication.name,
+            quantity: 0,
+        });
+    });
+};
+
+const search = ref({
+    medication: "",
+});
+const searchMedications = async (searchValue) => {
+    const { medication } = searchValue;
+    await router.reload({
+        data: {
+            search_medication: medication,
+        },
+        only: ["medications"],
+    });
+};
+watch(search.value, (value) => {
+    searchMedications(value);
+});
+const medicationsCart = ref([]);
+const addMedicationsToCart = () => {
+    medicationsList.value.forEach(medication => {
+        if (medication.quantity > 0) {
+            medicationsCart.value.push({
+                id: medication.id,
+                name: medication.name,
+                quantity: medication.quantity,
+            });
+            medication.quantity = 0;
+        }
+    });
+};
 
 const submit = () => {
     form.post(route('appointment.complaints.store', { appointment: props.appointment.data.id }), {
@@ -41,6 +83,12 @@ const nextPage = () => {
         page.value++;
     }
 };
+onBeforeMount(() => {
+    setMedicationsList(props.medications.data);
+});
+onBeforeUpdate(() => {
+    setMedicationsList(props.medications.data);
+});
 </script>
 
 <template>
@@ -97,8 +145,42 @@ const nextPage = () => {
                             </table>
                         </div>
                     </form>
+
                     <div v-show="page === 2">
-                        Page 2
+<!--                        search-->
+                        <div class="mt-4 flex justify-between space-x-4">
+                            <input
+                                v-model="search.medication"
+                                class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            >
+                            <PrimaryButton
+                                @click="addMedicationsToCart()"
+                            >
+                                Add to Cart
+                            </PrimaryButton>
+                        </div>
+<!--                        results-->
+                        <div>
+                            <table class="table-auto w-full mt-2">
+                                <thead>
+                                <tr>
+                                    <th class="text-left">Name</th>
+                                    <th class="text-left">Quantity</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">
+                                    <td>{{ medication.name }}</td>
+                                    <td>
+                                        <input type="number"
+                                               v-model="medicationsList[index].quantity"
+                                               min="0"
+                                        >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div v-show="page === 3">
                         Page 3

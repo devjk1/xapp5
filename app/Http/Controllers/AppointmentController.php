@@ -6,8 +6,10 @@ use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\ComplaintResource;
+use App\Http\Resources\MedicationResource;
 use App\Models\Appointment;
 use App\Models\Complaint;
+use App\Models\Medication;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,13 +63,21 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Appointment $appointment)
+    public function show(Request $request, Appointment $appointment)
     {
         $complaints = Complaint::orderBy('id', 'asc')->get();
+
+        $medications = Medication::query()
+            ->when($request->query('search_medication'), function ($query, $medication) {
+                $query->searchMedication($medication);
+            })
+            ->limit(15)
+            ->get();
 
         return Inertia::render('Appointments/Show', [
             'appointment' => AppointmentResource::make($appointment),
             'complaints' => ComplaintResource::collection($complaints),
+            'medications' => MedicationResource::collection($medications),
         ]);
     }
 
