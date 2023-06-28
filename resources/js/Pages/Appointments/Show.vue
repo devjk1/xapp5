@@ -3,6 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
+import ComplaintsForm from "./Show/ComplaintsForm.vue";
 
 const props = defineProps({
     appointment: {
@@ -23,9 +24,14 @@ const form = useForm({
     complaints: [],
     medications: [],
 });
-props.complaints.data.forEach(complaint => {
-    form["complaints"][complaint.id] = "0";
-});
+const saveComplaints = (complaintsList) =>  {
+    form.complaints = [];
+    complaintsList.forEach(complaint => {
+        if (complaint.level > 0) {
+            form.complaints.push(complaint);
+        }
+    });
+};
 const medicationsList = ref([]);
 const setMedicationsList = (medications) => {
     medicationsList.value = [];
@@ -120,31 +126,11 @@ onBeforeUpdate(() => {
                         </PrimaryButton>
                     </div>
 <!--                    Content-->
-                    <form @submit.prevent="submit()">
-                        <div v-show="page === 1">
-                            <table class="table-auto mt-4 w-full">
-                                <thead>
-                                <tr>
-                                    <th class="text-left">Complaint</th>
-                                    <th class="text-left">Level</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                <tr v-for="(complaint, index) in complaints.data" :key="complaint.id">
-                                    <td class="">{{ complaint.name }}</td>
-                                    <td class="">
-                                        <input type="range"
-                                               min="0"
-                                               max="5"
-                                               v-model="form['complaints'][complaint.id]"
-                                        >
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
+                    <ComplaintsForm
+                        :complaints="complaints"
+                        @save-complaints="saveComplaints"
+                        v-show="page === 1"
+                    />
 
                     <div v-show="page === 2">
 <!--                        search-->
