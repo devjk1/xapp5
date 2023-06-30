@@ -4,6 +4,7 @@ import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
 import ComplaintsForm from "./Show/ComplaintsForm.vue";
+import MedicationsSearch from "./Show/MedicationsSearch.vue";
 
 const props = defineProps({
     appointment: {
@@ -32,6 +33,18 @@ const saveComplaints = (complaintsList) =>  {
         }
     });
 };
+const search = ref({
+    medication: "",
+});
+const searchMedications = async (searchValue) => {
+    search.value.medication = searchValue;
+    await router.reload({
+        data: {
+            search_medication: searchValue,
+        },
+        only: ["medications"],
+    });
+};
 const medicationsList = ref([]);
 const setMedicationsList = (medications) => {
     medicationsList.value = [];
@@ -43,22 +56,6 @@ const setMedicationsList = (medications) => {
         });
     });
 };
-
-const search = ref({
-    medication: "",
-});
-const searchMedications = async (searchValue) => {
-    const { medication } = searchValue;
-    await router.reload({
-        data: {
-            search_medication: medication,
-        },
-        only: ["medications"],
-    });
-};
-watch(search.value, (value) => {
-    searchMedications(value);
-});
 const medicationsCart = ref([]);
 const addMedicationsToCart = () => {
     medicationsList.value.forEach(medication => {
@@ -132,42 +129,42 @@ onBeforeUpdate(() => {
                         v-show="page === 1"
                     />
 
-                    <div v-show="page === 2">
-<!--                        search-->
-                        <div class="mt-4 flex justify-between space-x-4">
-                            <input
-                                v-model="search.medication"
-                                class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                            >
-                            <PrimaryButton
-                                @click="addMedicationsToCart()"
-                            >
-                                Add to Cart
-                            </PrimaryButton>
-                        </div>
-<!--                        results-->
-                        <div>
-                            <table class="table-auto w-full mt-2">
-                                <thead>
-                                <tr>
-                                    <th class="text-left">Name</th>
-                                    <th class="text-left">Quantity</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">
-                                    <td>{{ medication.name }}</td>
-                                    <td>
-                                        <input type="number"
-                                               v-model="medicationsList[index].quantity"
-                                               min="0"
-                                        >
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="mt-4 flex justify-between">
+                        <MedicationsSearch
+                            :medication-search="search.medication"
+                            @search-medications="searchMedications"
+                            v-show="page === 2"
+                            class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        />
+                        <PrimaryButton
+                            @click="addMedicationsToCart()"
+                        >
+                            Add to Cart
+                        </PrimaryButton>
                     </div>
+<!--                    Medications List-->
+                    <div>
+                        <table class="table-auto w-full mt-2">
+                            <thead>
+                            <tr>
+                                <th class="text-left">Name</th>
+                                <th class="text-left">Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(medication, index) in medicationsList" :key="medication.id">
+                                <td>{{ medication.name }}</td>
+                                <td>
+                                    <input type="number"
+                                           v-model="medicationsList[index].quantity"
+                                           min="0"
+                                    >
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
                     <div v-show="page === 3">
                         Page 3
                     </div>
