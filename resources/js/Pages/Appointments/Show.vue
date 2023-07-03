@@ -75,16 +75,6 @@ const submit = () => {
         onFinish: () => form.reset(),
     });
 };
-const prevPage = () => {
-    if (page.value > 0) {
-        page.value--;
-    }
-};
-const nextPage = () => {
-    if (page.value < 4) {
-        page.value++;
-    }
-};
 onBeforeMount(() => {
     setMedicationsList(props.medications.data);
 });
