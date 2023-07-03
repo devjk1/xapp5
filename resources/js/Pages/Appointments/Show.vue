@@ -4,7 +4,7 @@ import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
 import ComplaintsForm from "./Show/ComplaintsForm.vue";
-import MedicationsSearch from "./Show/MedicationsSearch.vue";
+import SearchInput from "../../Components/SearchInput.vue";
 
 const props = defineProps({
     appointment: {
@@ -37,7 +37,6 @@ const search = ref({
     medication: "",
 });
 const searchMedications = async (searchValue) => {
-    search.value.medication = searchValue;
     await router.reload({
         data: {
             search_medication: searchValue,
@@ -131,10 +130,9 @@ onBeforeUpdate(() => {
 
                     <div v-show="page === 2">
                         <div class="mt-4 flex justify-between">
-                            <MedicationsSearch
-                                :medication-search="search.medication"
-                                @search-medications="searchMedications"
-                                class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            <SearchInput
+                                v-model="search.medication"
+                                @update:modelValue="searchMedications"
                             />
                             <PrimaryButton
                                 @click="addMedicationsToCart()"
