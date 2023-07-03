@@ -129,82 +129,52 @@ onBeforeUpdate(() => {
                         v-show="page === 1"
                     />
 
-                    <div class="mt-4 flex justify-between">
-                        <MedicationsSearch
-                            :medication-search="search.medication"
-                            @search-medications="searchMedications"
-                            v-show="page === 2"
-                            class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        />
-                        <PrimaryButton
-                            @click="addMedicationsToCart()"
-                        >
-                            Add to Cart
-                        </PrimaryButton>
+                    <div v-show="page === 2">
+                        <div class="mt-4 flex justify-between">
+                            <MedicationsSearch
+                                :medication-search="search.medication"
+                                @search-medications="searchMedications"
+                                class="p-2 border-gray-800 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            />
+                            <PrimaryButton
+                                @click="addMedicationsToCart()"
+                            >
+                                Add to Cart
+                            </PrimaryButton>
+                        </div>
+    <!--                    Medications List-->
+                        <div>
+                            <table class="table-auto w-full mt-2">
+                                <thead>
+                                <tr>
+                                    <th class="text-left">Name</th>
+                                    <th class="text-left">Quantity</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">
+                                    <td>{{ medication.name }}</td>
+                                    <td>
+                                        <input type="number"
+                                               v-model="medicationsList[index].quantity"
+                                               min="0"
+                                        >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-<!--                    Medications List-->
-                    <div>
-                        <table class="table-auto w-full mt-2">
-                            <thead>
-                            <tr>
-                                <th class="text-left">Name</th>
-                                <th class="text-left">Quantity</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(medication, index) in medicationsList" :key="medication.id">
-                                <td>{{ medication.name }}</td>
-                                <td>
-                                    <input type="number"
-                                           v-model="medicationsList[index].quantity"
-                                           min="0"
-                                    >
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div v-show="page === 3">
-                        Page 3
-                    </div>
-                    <div v-show="page === 4">
-                        Page 4
-                    </div>
-                    <div class="flex justify-end" v-show="page === 1">
-                        <PrimaryButton
-                            @click="nextPage()"
-                            class="mt-4"
-                        >
-                            Next
-                        </PrimaryButton>
-                    </div>
-<!--                    Prev/Next Buttons-->
-                    <div class="flex justify-between" v-show="page > 1">
-                        <PrimaryButton
-                            @click="prevPage()"
-                            v-show="page > 1 && page <= 4"
-                            class="mt-4"
-                        >
-                            Previous
-                        </PrimaryButton>
-                        <PrimaryButton
-                            @click="nextPage()"
-                            v-show="page < 4"
-                            class="mt-4"
-                        >
-                            Next
-                        </PrimaryButton>
-                        <PrimaryButton
-                            @click="submit()"
-                            v-show="page === 4"
-                            :disabled="form.processing"
-                            class="mt-4"
-                            :class="[ form.processing ? 'opacity-25' : '' ]"
-                        >
-                            Submit
-                        </PrimaryButton>
-                    </div>
+
+<!--                        <PrimaryButton-->
+<!--                            @click="submit()"-->
+<!--                            v-show="page === 4"-->
+<!--                            :disabled="form.processing"-->
+<!--                            class="mt-4"-->
+<!--                            :class="[ form.processing ? 'opacity-25' : '' ]"-->
+<!--                        >-->
+<!--                            Submit-->
+<!--                        </PrimaryButton>-->
                 </div>
             </div>
         </div>
