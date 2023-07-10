@@ -69,8 +69,6 @@ const addMedicationsToCart = () => {
         }
     });
 };
-// may not need to be reactive
-// settings for table
 const headers = ref([
     "ID",
     "Name",
@@ -153,37 +151,8 @@ onBeforeUpdate(() => {
                                     >
                                 </template>
                             </DataTable>
-<!--                            <table class="table-auto w-full mt-2">-->
-<!--                                <thead>-->
-<!--                                <tr>-->
-<!--                                    <th class="text-left">Name</th>-->
-<!--                                    <th class="text-left">Quantity</th>-->
-<!--                                </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
-<!--                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">-->
-<!--                                    <td>{{ medication.name }}</td>-->
-<!--                                    <td>-->
-<!--                                        <input type="number"-->
-<!--                                               v-model="medicationsList[index].quantity"-->
-<!--                                               min="0"-->
-<!--                                        >-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
                         </div>
                     </div>
-
-<!--                        <PrimaryButton-->
-<!--                            @click="submit()"-->
-<!--                            v-show="page === 4"-->
-<!--                            :disabled="form.processing"-->
-<!--                            class="mt-4"-->
-<!--                            :class="[ form.processing ? 'opacity-25' : '' ]"-->
-<!--                        >-->
-<!--                            Submit-->
-<!--                        </PrimaryButton>-->
                 </div>
             </div>
         </div>
