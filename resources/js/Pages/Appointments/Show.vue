@@ -5,6 +5,7 @@ import PrimaryButton from "../../Components/PrimaryButton.vue";
 import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
 import ComplaintsForm from "./Show/ComplaintsForm.vue";
 import SearchInput from "../../Components/SearchInput.vue";
+import DataTable from "../../Components/DataTable.vue";
 
 const props = defineProps({
     appointment: {
@@ -68,6 +69,13 @@ const addMedicationsToCart = () => {
         }
     });
 };
+// may not need to be reactive
+// settings for table
+const headers = ref([
+    "ID",
+    "Name",
+    "Quantity",
+]);
 
 const submit = () => {
     form.post(route('appointment.complaints.store', { appointment: props.appointment.data.id }), {
@@ -132,25 +140,38 @@ onBeforeUpdate(() => {
                         </div>
     <!--                    Medications List-->
                         <div>
-                            <table class="table-auto w-full mt-2">
-                                <thead>
-                                <tr>
-                                    <th class="text-left">Name</th>
-                                    <th class="text-left">Quantity</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">
-                                    <td>{{ medication.name }}</td>
-                                    <td>
-                                        <input type="number"
-                                               v-model="medicationsList[index].quantity"
-                                               min="0"
-                                        >
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <DataTable
+                                :data="medications.data"
+                                :headers="headers"
+                            >
+                                <template #row="rowProps">
+                                    <td>{{ rowProps.item.id }}</td>
+                                    <td>{{ rowProps.item.name }}</td>
+                                    <input type="number"
+                                           v-model="medicationsList[rowProps.index].quantity"
+                                           min="0"
+                                    >
+                                </template>
+                            </DataTable>
+<!--                            <table class="table-auto w-full mt-2">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th class="text-left">Name</th>-->
+<!--                                    <th class="text-left">Quantity</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                <tr v-for="(medication, index) in medicationsList" :key="medication.id">-->
+<!--                                    <td>{{ medication.name }}</td>-->
+<!--                                    <td>-->
+<!--                                        <input type="number"-->
+<!--                                               v-model="medicationsList[index].quantity"-->
+<!--                                               min="0"-->
+<!--                                        >-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
                         </div>
                     </div>
 
