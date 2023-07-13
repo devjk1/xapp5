@@ -76,7 +76,9 @@ const headers = ref([
 ]);
 
 const submit = () => {
-    form.post(route('appointment.complaints.store', { appointment: props.appointment.data.id }), {
+    addMedicationsToCart();
+    form.medications = medicationsCart.value;
+    form.post(route('invoices.store', { appointment: props.appointment.data.id }), {
         preserveScroll: true,
         onFinish: () => form.reset(),
     });
@@ -151,6 +153,14 @@ onBeforeUpdate(() => {
                                     >
                                 </template>
                             </DataTable>
+                        </div>
+<!--                        Submit-->
+                        <div class="flex justify-end">
+                            <PrimaryButton
+                                @click="submit"
+                            >
+                                Submit
+                            </PrimaryButton>
                         </div>
                     </div>
                 </div>
