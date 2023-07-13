@@ -37,11 +37,7 @@ const initComplaintsList = () => {
 };
 const saveComplaints = () =>  {
     form.complaints = [];
-    complaintsList.value.forEach(complaint => {
-        if (complaint.level > 0) {
-            form.complaints.push(complaint);
-        }
-    });
+    form.complaints = complaintsList.value.filter(complaint => complaint.level > 0);
     page.value = 2;
 };
 const search = ref({
