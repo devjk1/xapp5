@@ -3,7 +3,6 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import {router, useForm} from "@inertiajs/vue3";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
 import {onBeforeMount, onBeforeUpdate, ref, watch} from "vue";
-import ComplaintsForm from "./Show/ComplaintsForm.vue";
 import SearchInput from "../../Components/SearchInput.vue";
 import DataTable from "../../Components/DataTable.vue";
 
@@ -26,9 +25,19 @@ const form = useForm({
     complaints: [],
     medications: [],
 });
-const saveComplaints = (complaintsList) =>  {
+const complaintsList = ref([]);
+const initComplaintsList = () => {
+    props.complaints.data.forEach(complaint => {
+        complaintsList.value.push({
+            id: complaint.id,
+            name: complaint.name,
+            level: "0",
+        });
+    });
+};
+const saveComplaints = () =>  {
     form.complaints = [];
-    complaintsList.forEach(complaint => {
+    complaintsList.value.forEach(complaint => {
         if (complaint.level > 0) {
             form.complaints.push(complaint);
         }
@@ -70,7 +79,11 @@ const addMedicationsToCart = () => {
         }
     });
 };
-const headers = ref([
+const complaintsTableHeaders = ref([
+    "Complaint",
+    "Level",
+]);
+const medicationsTableHeaders = ref([
     "ID",
     "Name",
     "Quantity",
@@ -85,6 +98,7 @@ const submit = () => {
     });
 };
 onBeforeMount(() => {
+    initComplaintsList();
     setMedicationsList(props.medications.data);
 });
 onBeforeUpdate(() => {
@@ -121,11 +135,31 @@ onBeforeUpdate(() => {
                         </PrimaryButton>
                     </div>
 <!--                    Content-->
-                    <ComplaintsForm
-                        :complaints="complaints"
-                        @save-complaints="saveComplaints"
-                        v-show="page === 1"
-                    />
+                    <div v-show="page === 1">
+                        <DataTable
+                            :data="complaints.data"
+                            :headers="complaintsTableHeaders"
+                        >
+                            <template #row="rowProps">
+                                <td>{{ rowProps.item.name }}</td>
+                                <td>
+                                    <input type="range"
+                                           min="0"
+                                           max="5"
+                                           v-model="complaintsList[rowProps.index].level"
+                                    >
+                                </td>
+                            </template>
+                        </DataTable>
+
+                        <div class="flex justify-end">
+                            <PrimaryButton
+                                @click="saveComplaints"
+                            >
+                                Save Complaints
+                            </PrimaryButton>
+                        </div>
+                    </div>
 
                     <div v-show="page === 2">
                         <div class="mt-4 flex justify-between">
@@ -143,7 +177,7 @@ onBeforeUpdate(() => {
                         <div>
                             <DataTable
                                 :data="medications.data"
-                                :headers="headers"
+                                :headers="medicationsTableHeaders"
                             >
                                 <template #row="rowProps">
                                     <td>{{ rowProps.item.id }}</td>
