@@ -56,9 +56,9 @@ const searchMedications = async (searchValue) => {
     });
 };
 const medicationsList = ref([]);
-const setMedicationsList = (medications) => {
+const initMedicationsList = () => {
     medicationsList.value = [];
-    medications.forEach(medication => {
+    props.medications.data.forEach(medication => {
         medicationsList.value.push({
             id: medication.id,
             name: medication.name,
@@ -99,10 +99,10 @@ const submit = () => {
 };
 onBeforeMount(() => {
     initComplaintsList();
-    setMedicationsList(props.medications.data);
+    initMedicationsList();
 });
 onBeforeUpdate(() => {
-    setMedicationsList(props.medications.data);
+    initMedicationsList();
 });
 </script>
 
