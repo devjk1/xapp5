@@ -33,6 +33,7 @@ const saveComplaints = (complaintsList) =>  {
             form.complaints.push(complaint);
         }
     });
+    page.value = 2;
 };
 const search = ref({
     medication: "",
